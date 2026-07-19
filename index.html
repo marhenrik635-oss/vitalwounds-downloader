@@ -4,276 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vitalwounds Downloader — All-in-One Social Media Downloader</title>
-    <meta name="description" content="Download video & foto dari YouTube, TikTok, Instagram, Facebook secara gratis dan cepat.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --vw-bg: #F8F9FA;
-            --vw-surface: #FFFFFF;
-            --vw-text: #1A1A2E;
-            --vw-muted: #9CA3AF;
-            --vw-border: rgba(0, 0, 0, 0.08);
-            --vw-accent: #3B82F6;
-            --vw-accent-hover: #2563EB;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --vw-bg: #0A0A0A;
-                --vw-surface: #121212;
-                --vw-text: #FAFAFA;
-                --vw-muted: #9E9E9E;
-                --vw-border: rgba(255, 255, 255, 0.08);
-            }
-        }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--vw-bg);
-            color: var(--vw-text);
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .glass-card {
-            background: var(--vw-surface);
-            border: 1px solid var(--vw-border);
-            border-radius: 1.5rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-        }
-
-        .btn-primary {
-            background-color: var(--vw-accent);
-            color: white;
-            transition: all 0.2s;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--vw-accent-hover);
-            transform: translateY(-1px);
-        }
-
-        .input-field {
-            background: var(--vw-surface);
-            border: 1px solid var(--vw-border);
-            color: var(--vw-text);
-        }
-
-        .input-field:focus {
-            outline: none;
-            border-color: var(--vw-accent);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .grain-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.05;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
+        :root { --vw-bg: #F8F9FA; --vw-surface: #FFFFFF; --vw-text: #1A1A2E; --vw-accent: #3B82F6; }
+        body { font-family: 'Outfit', sans-serif; background-color: var(--vw-bg); color: var(--vw-text); }
+        .glass-card { background: var(--vw-surface); border: 1px solid rgba(0,0,0,0.08); border-radius: 1.5rem; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="grain-overlay"></div>
-
-    <main class="w-full max-w-2xl animate-fade-in my-8">
-        <header class="text-center mb-10">
-            <div class="flex items-center justify-center gap-3 mb-4">
-                <div class="w-12 h-12 rounded-2xl bg-vw-accent flex items-center justify-center shadow-lg">
-                    <span class="text-white text-2xl font-bold">✦</span>
-                </div>
-                <h1 class="text-3xl font-extrabold tracking-tight">Vitalwounds <span class="text-vw-accent">Downloader</span></h1>
-            </div>
-            <p class="text-vw-muted font-medium">Download video, audio, dan foto dari semua sosial media.</p>
+<body class="p-4 flex flex-col items-center">
+    <main class="w-full max-w-2xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-extrabold mb-2">Vitalwounds <span class="text-vw-accent">Downloader</span></h1>
+            <p class="text-gray-500 font-medium">Tempel link, pilih platform, download.</p>
         </header>
 
-        <!-- Medsos list -->
-        <section class="mb-8">
-            <h2 class="text-xs font-bold text-vw-muted uppercase tracking-[0.2em] text-center mb-4">Mendukung Layanan Medsos</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/youtube/youtube-original.svg" class="w-6 h-6" alt="YouTube">
-                    <span class="text-xs font-bold">YouTube</span>
-                </div>
-                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
-                    <img src="https://static.vecteezy.com/system/resources/previews/023/986/921/non_2x/tiktok-logo-tiktok-logo-transparent-tiktok-icon-transparent-free-png.png" class="w-6 h-6 object-contain" alt="TikTok">
-                    <span class="text-xs font-bold">TikTok</span>
-                </div>
-                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" class="w-6 h-6" alt="Instagram">
-                    <span class="text-xs font-bold">Instagram</span>
-                </div>
-                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="w-6 h-6" alt="Facebook">
-                    <span class="text-xs font-bold">Facebook</span>
-                </div>
-                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg" class="w-6 h-6 filter dark:invert" alt="Twitter/X">
-                    <span class="text-xs font-bold">Twitter/X</span>
-                </div>
-                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.svg" class="w-6 h-6" alt="Pinterest">
-                    <span class="text-xs font-bold">Pinterest</span>
-                </div>
-                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Reddit_logo_new.svg" class="w-6 h-6" alt="Reddit">
-                    <span class="text-xs font-bold">Reddit</span>
-                </div>
-                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/SoundCloud_logo.svg" class="w-6 h-6" alt="SoundCloud">
-                    <span class="text-xs font-bold">SoundCloud</span>
-                </div>
-            </div>
+        <section class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            <!-- Tombol Social Media -->
+            <button onclick="setPlaceholder('YouTube')" class="p-3 rounded-xl bg-white border border-gray-200 hover:border-vw-accent flex flex-col items-center gap-2 transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" class="w-8 h-8 object-contain">
+                <span class="text-xs font-bold">YouTube</span>
+            </button>
+            <button onclick="setPlaceholder('TikTok')" class="p-3 rounded-xl bg-white border border-gray-200 hover:border-vw-accent flex flex-col items-center gap-2 transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg" class="w-8 h-8 object-contain">
+                <span class="text-xs font-bold">TikTok</span>
+            </button>
+            <button onclick="setPlaceholder('Instagram')" class="p-3 rounded-xl bg-white border border-gray-200 hover:border-vw-accent flex flex-col items-center gap-2 transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" class="w-8 h-8">
+                <span class="text-xs font-bold">Instagram</span>
+            </button>
+            <button onclick="setPlaceholder('Facebook')" class="p-3 rounded-xl bg-white border border-gray-200 hover:border-vw-accent flex flex-col items-center gap-2 transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="w-8 h-8">
+                <span class="text-xs font-bold">Facebook</span>
+            </button>
         </section>
 
-        <div class="glass-card p-6 md:p-8">
-            <div class="flex flex-col gap-4">
-                <div class="relative">
-                    <input type="text" id="urlInput" placeholder="Tempel link video di sini..." class="input-field w-full px-5 py-4 rounded-2xl text-lg font-medium pr-32">
-                    <button id="downloadBtn" class="absolute right-2 top-2 bottom-2 px-6 rounded-xl btn-primary font-bold text-sm">Download</button>
-                </div>
-                
-                <div id="loading" class="hidden flex flex-col items-center py-10">
-                    <div class="w-10 h-10 border-4 border-vw-accent border-t-transparent rounded-full animate-spin mb-4"></div>
-                    <p class="text-sm font-semibold text-vw-muted">Sedang memproses...</p>
-                </div>
-
-                <div id="result" class="hidden space-y-6 mt-4">
-                    <div id="mediaPreview" class="w-full aspect-video rounded-2xl bg-black/5 overflow-hidden flex items-center justify-center">
-                        <!-- Preview content here -->
-                    </div>
-                    
-                    <div id="downloadOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <!-- Options here -->
-                    </div>
-                </div>
-
-                <div id="error" class="hidden p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-semibold text-center">
-                    Gagal mengambil data. Pastikan link benar atau coba instance lain.
-                </div>
-            </div>
+        <div class="glass-card p-6">
+            <input type="text" id="urlInput" placeholder="Pilih platform dulu..." class="w-full p-4 rounded-xl border border-gray-200 mb-4 focus:ring-2 focus:ring-vw-accent outline-none">
+            <button id="downloadBtn" class="w-full py-4 bg-vw-accent text-white font-bold rounded-xl hover:bg-blue-600 transition">Download Sekarang</button>
         </div>
-
-        <footer class="mt-12 text-center">
-            <p class="text-[10px] font-bold text-vw-muted/40 uppercase tracking-[0.2em]">Powering by Cobalt API & Vitalwounds</p>
-        </footer>
     </main>
-
     <script>
-        const instances = [
-            "https://api.cobalt.tools",
-            "https://cobalt.stream"
-        ];
-
-        let currentInstanceIdx = 0;
-
-        const urlInput = document.getElementById('urlInput');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const loading = document.getElementById('loading');
-        const result = document.getElementById('result');
-        const error = document.getElementById('error');
-        const mediaPreview = document.getElementById('mediaPreview');
-        const downloadOptions = document.getElementById('downloadOptions');
-
-        async function fetchMedia(url) {
-            loading.classList.remove('hidden');
-            result.classList.add('hidden');
-            error.classList.add('hidden');
-            
-            try {
-                const instance = instances[currentInstanceIdx];
-                const response = await fetch(`${instance}/api/json`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        url: url,
-                        vQuality: "1080",
-                        vCodec: "h264",
-                        filenamePattern: "classic"
-                    })
-                });
-
-                const data = await response.json();
-                
-                if (data.status === 'error' || data.status === 'rate-limit') {
-                    throw new Error(data.text || 'Error');
-                }
-
-                showResult(data);
-            } catch (err) {
-                console.error(err);
-                // Rotate instance on error
-                currentInstanceIdx = (currentInstanceIdx + 1) % instances.length;
-                error.classList.remove('hidden');
-                error.innerText = "Error: " + err.message + ". Mencoba instance lain...";
-            } finally {
-                loading.classList.add('hidden');
-            }
-        }
-
-        function showResult(data) {
-            result.classList.remove('hidden');
-            downloadOptions.innerHTML = '';
-            mediaPreview.innerHTML = '';
-
-            // Handle Preview
-            if (data.status === 'stream') {
-                const video = document.createElement('video');
-                video.src = data.url;
-                video.controls = true;
-                video.className = 'w-full h-full';
-                mediaPreview.appendChild(video);
-
-                addDownloadBtn('Download Video (MP4)', data.url);
-            } else if (data.status === 'redirect') {
-                addDownloadBtn('Download (Direct Link)', data.url);
-                mediaPreview.innerHTML = '<p class="text-vw-muted">Preview tidak tersedia untuk link ini.</p>';
-            } else if (data.status === 'picker') {
-                data.picker.forEach(item => {
-                    if (item.type === 'video' || item.type === 'photo') {
-                        addDownloadBtn(`Download ${item.type} ${item.text || ''}`, item.url);
-                    }
-                });
-                mediaPreview.innerHTML = '<p class="text-vw-muted">Multiple media terdeteksi. Pilih di bawah.</p>';
-            }
-        }
-
-        function addDownloadBtn(text, url) {
-            const btn = document.createElement('a');
-            btn.href = url;
-            btn.target = '_blank';
-            btn.innerText = text;
-            btn.className = 'px-4 py-3 rounded-xl bg-vw-accent/10 border border-vw-accent/20 text-vw-accent text-sm font-bold text-center hover:bg-vw-accent hover:text-white transition-all';
-            downloadOptions.appendChild(btn);
-        }
-
-        downloadBtn.addEventListener('click', () => {
-            const url = urlInput.value.trim();
-            if (url) fetchMedia(url);
-        });
-
-        urlInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const url = urlInput.value.trim();
-                if (url) fetchMedia(url);
-            }
-        });
+        const input = document.getElementById('urlInput');
+        function setPlaceholder(platform) { input.placeholder = `Tempel link ${platform} di sini...`; input.focus(); }
+        // Fetch logic here...
     </script>
 </body>
 </html>
