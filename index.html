@@ -89,7 +89,7 @@
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
     <div class="grain-overlay"></div>
 
-    <main class="w-full max-w-2xl animate-fade-in">
+    <main class="w-full max-w-2xl animate-fade-in my-8">
         <header class="text-center mb-10">
             <div class="flex items-center justify-center gap-3 mb-4">
                 <div class="w-12 h-12 rounded-2xl bg-vw-accent flex items-center justify-center shadow-lg">
@@ -99,6 +99,45 @@
             </div>
             <p class="text-vw-muted font-medium">Download video, audio, dan foto dari semua sosial media.</p>
         </header>
+
+        <!-- Medsos list -->
+        <section class="mb-8">
+            <h2 class="text-xs font-bold text-vw-muted uppercase tracking-[0.2em] text-center mb-4">Mendukung Layanan Medsos</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/youtube/youtube-original.svg" class="w-6 h-6" alt="YouTube">
+                    <span class="text-xs font-bold">YouTube</span>
+                </div>
+                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
+                    <img src="https://static.vecteezy.com/system/resources/previews/023/986/921/non_2x/tiktok-logo-tiktok-logo-transparent-tiktok-icon-transparent-free-png.png" class="w-6 h-6 object-contain" alt="TikTok">
+                    <span class="text-xs font-bold">TikTok</span>
+                </div>
+                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" class="w-6 h-6" alt="Instagram">
+                    <span class="text-xs font-bold">Instagram</span>
+                </div>
+                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="w-6 h-6" alt="Facebook">
+                    <span class="text-xs font-bold">Facebook</span>
+                </div>
+                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg" class="w-6 h-6 filter dark:invert" alt="Twitter/X">
+                    <span class="text-xs font-bold">Twitter/X</span>
+                </div>
+                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.svg" class="w-6 h-6" alt="Pinterest">
+                    <span class="text-xs font-bold">Pinterest</span>
+                </div>
+                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Reddit_logo_new.svg" class="w-6 h-6" alt="Reddit">
+                    <span class="text-xs font-bold">Reddit</span>
+                </div>
+                <div class="flex items-center gap-2 p-3 rounded-xl bg-vw-surface border border-vw-border">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/SoundCloud_logo.svg" class="w-6 h-6" alt="SoundCloud">
+                    <span class="text-xs font-bold">SoundCloud</span>
+                </div>
+            </div>
+        </section>
 
         <div class="glass-card p-6 md:p-8">
             <div class="flex flex-col gap-4">
@@ -135,9 +174,8 @@
 
     <script>
         const instances = [
-            "https://cobalt.instance.link", // Ganti dengan instance publik asli
-            "https://cobalt.moe",
-            "https://co.wuk.sh"
+            "https://api.cobalt.tools",
+            "https://cobalt.stream"
         ];
 
         let currentInstanceIdx = 0;
