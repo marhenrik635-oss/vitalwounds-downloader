@@ -7,47 +7,233 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --vw-bg: #F8F9FA; --vw-surface: #FFFFFF; --vw-text: #1A1A2E; --vw-accent: #3B82F6; }
-        body { font-family: 'Outfit', sans-serif; background-color: var(--vw-bg); color: var(--vw-text); }
-        .glass-card { background: var(--vw-surface); border: 1px solid rgba(0,0,0,0.08); border-radius: 1.5rem; }
+        :root {
+            --vw-bg: #F8F9FA;
+            --vw-surface: #FFFFFF;
+            --vw-text: #1A1A2E;
+            --vw-accent: #3B82F6;
+            --vw-accent-hover: #2563EB;
+            --vw-border: rgba(0, 0, 0, 0.08);
+            --vw-muted: #9CA3AF;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --vw-bg: #0A0A0A;
+                --vw-surface: #121212;
+                --vw-text: #FAFAFA;
+                --vw-muted: #9E9E9E;
+                --vw-border: rgba(255, 255, 255, 0.08);
+            }
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--vw-bg);
+            color: var(--vw-text);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .glass-card {
+            background: var(--vw-surface);
+            border: 1px solid var(--vw-border);
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+        .btn-primary {
+            background-color: var(--vw-accent);
+            color: white;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: var(--vw-accent-hover);
+            transform: translateY(-1px);
+        }
+        .input-field {
+            background: var(--vw-surface);
+            border: 1px solid var(--vw-border);
+            color: var(--vw-text);
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: var(--vw-accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .grain-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+        .active-platform {
+            border-color: var(--vw-accent) !important;
+            background-color: rgba(59, 130, 246, 0.05) !important;
+            box-shadow: 0 0 0 2px var(--vw-accent) !important;
+        }
     </style>
 </head>
-<body class="p-4 flex flex-col items-center">
-    <main class="w-full max-w-2xl">
+<body class="p-4 min-h-screen flex flex-col items-center justify-center">
+    <div class="grain-overlay"></div>
+    <main class="w-full max-w-2xl my-8">
         <header class="text-center mb-8">
-            <h1 class="text-3xl font-extrabold mb-2">Vitalwounds <span class="text-vw-accent">Downloader</span></h1>
-            <p class="text-gray-500 font-medium">Tempel link, pilih platform, download.</p>
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-vw-accent flex items-center justify-center shadow-lg">
+                    <span class="text-white text-2xl font-bold">✦</span>
+                </div>
+                <h1 class="text-3xl font-extrabold tracking-tight">Vitalwounds <span class="text-vw-accent">Downloader</span></h1>
+            </div>
+            <p class="text-vw-muted font-medium">Tempel link, pilih platform, download secara gratis.</p>
         </header>
 
         <section class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
             <!-- Tombol Social Media -->
-            <button onclick="setPlaceholder('YouTube')" class="p-3 rounded-xl bg-white border border-gray-200 hover:border-vw-accent flex flex-col items-center gap-2 transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" class="w-8 h-8 object-contain">
+            <button onclick="selectPlatform(this, 'YouTube')" class="platform-btn p-4 rounded-2xl bg-white border border-vw-border hover:border-vw-accent flex flex-col items-center gap-2 transition dark:bg-zinc-900">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.svg" class="w-8 h-8 object-contain" alt="YouTube">
                 <span class="text-xs font-bold">YouTube</span>
             </button>
-            <button onclick="setPlaceholder('TikTok')" class="p-3 rounded-xl bg-white border border-gray-200 hover:border-vw-accent flex flex-col items-center gap-2 transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg" class="w-8 h-8 object-contain">
+            <button onclick="selectPlatform(this, 'TikTok')" class="platform-btn p-4 rounded-2xl bg-white border border-vw-border hover:border-vw-accent flex flex-col items-center gap-2 transition dark:bg-zinc-900">
+                <!-- Gunakan icon SVG inline yang valid untuk TikTok -->
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.83.99 1.99 1.7 3.27 2 .02 1.34.01 2.68.01 4.02-1.39-.08-2.73-.68-3.78-1.63-.44-.4-.8-.88-1.09-1.42-.03 2.76-.01 5.51-.02 8.27-.08 2.54-1.12 5.03-3.07 6.7-2.14 1.95-5.26 2.68-8.1 1.9-2.9-.74-5.32-3.13-5.99-6.08-.82-3.32.74-6.91 3.79-8.47 1.63-.87 3.53-1.13 5.35-.76v4.06c-1.17-.34-2.45-.11-3.41.62-.97.71-1.53 1.89-1.48 3.11.02 1.33.82 2.56 2.04 3.07 1.25.56 2.77.34 3.78-.54 1.05-.88 1.45-2.39 1.39-3.74.02-4.04.01-8.08.01-12.12z"/></svg>
                 <span class="text-xs font-bold">TikTok</span>
             </button>
-            <button onclick="setPlaceholder('Instagram')" class="p-3 rounded-xl bg-white border border-gray-200 hover:border-vw-accent flex flex-col items-center gap-2 transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" class="w-8 h-8">
+            <button onclick="selectPlatform(this, 'Instagram')" class="platform-btn p-4 rounded-2xl bg-white border border-vw-border hover:border-vw-accent flex flex-col items-center gap-2 transition dark:bg-zinc-900">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" class="w-8 h-8" alt="Instagram">
                 <span class="text-xs font-bold">Instagram</span>
             </button>
-            <button onclick="setPlaceholder('Facebook')" class="p-3 rounded-xl bg-white border border-gray-200 hover:border-vw-accent flex flex-col items-center gap-2 transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="w-8 h-8">
+            <button onclick="selectPlatform(this, 'Facebook')" class="platform-btn p-4 rounded-2xl bg-white border border-vw-border hover:border-vw-accent flex flex-col items-center gap-2 transition dark:bg-zinc-900">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="w-8 h-8" alt="Facebook">
                 <span class="text-xs font-bold">Facebook</span>
             </button>
         </section>
 
-        <div class="glass-card p-6">
-            <input type="text" id="urlInput" placeholder="Pilih platform dulu..." class="w-full p-4 rounded-xl border border-gray-200 mb-4 focus:ring-2 focus:ring-vw-accent outline-none">
-            <button id="downloadBtn" class="w-full py-4 bg-vw-accent text-white font-bold rounded-xl hover:bg-blue-600 transition">Download Sekarang</button>
+        <div class="glass-card p-6 md:p-8">
+            <div class="flex flex-col gap-4">
+                <input type="text" id="urlInput" placeholder="Pilih platform di atas dahulu..." class="input-field w-full px-5 py-4 rounded-2xl text-lg font-medium outline-none">
+                <button id="downloadBtn" class="w-full py-4 rounded-2xl btn-primary font-bold text-sm">Download Sekarang</button>
+                
+                <div id="loading" class="hidden flex flex-col items-center py-10">
+                    <div class="w-10 h-10 border-4 border-vw-accent border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <p class="text-sm font-semibold text-vw-muted">Sedang memproses...</p>
+                </div>
+
+                <div id="result" class="hidden space-y-6 mt-4">
+                    <div id="mediaPreview" class="w-full aspect-video rounded-2xl bg-black/5 overflow-hidden flex items-center justify-center border border-vw-border">
+                        <!-- Preview content -->
+                    </div>
+                    <div id="downloadOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <!-- Options -->
+                    </div>
+                </div>
+
+                <div id="error" class="hidden p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-semibold text-center"></div>
+            </div>
         </div>
     </main>
+
     <script>
+        const instances = [
+            "https://api.cobalt.tools",
+            "https://cobalt.stream"
+        ];
+        let currentInstanceIdx = 0;
+
         const input = document.getElementById('urlInput');
-        function setPlaceholder(platform) { input.placeholder = `Tempel link ${platform} di sini...`; input.focus(); }
-        // Fetch logic here...
+        const downloadBtn = document.getElementById('downloadBtn');
+        const loading = document.getElementById('loading');
+        const result = document.getElementById('result');
+        const error = document.getElementById('error');
+        const mediaPreview = document.getElementById('mediaPreview');
+        const downloadOptions = document.getElementById('downloadOptions');
+
+        function selectPlatform(btn, platform) {
+            document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active-platform'));
+            btn.classList.add('active-platform');
+            input.placeholder = `Tempel link ${platform} di sini...`;
+            input.focus();
+        }
+
+        async function fetchMedia(url) {
+            loading.classList.remove('hidden');
+            result.classList.add('hidden');
+            error.classList.add('hidden');
+
+            try {
+                const instance = instances[currentInstanceIdx];
+                const response = await fetch(`${instance}/api/json`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        url: url,
+                        vQuality: "1080",
+                        filenamePattern: "classic"
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error("HTTP error " + response.status);
+                }
+
+                const data = await response.json();
+                if (data.status === 'error') {
+                    throw new Error(data.text || 'Gagal memproses link.');
+                }
+
+                showResult(data);
+            } catch (err) {
+                console.error(err);
+                currentInstanceIdx = (currentInstanceIdx + 1) % instances.length;
+                error.classList.remove('hidden');
+                error.innerText = `Gagal: ${err.message}. Mencoba server cadangan...`;
+            } finally {
+                loading.classList.add('hidden');
+            }
+        }
+
+        function showResult(data) {
+            result.classList.remove('hidden');
+            downloadOptions.innerHTML = '';
+            mediaPreview.innerHTML = '';
+
+            if (data.status === 'stream') {
+                const video = document.createElement('video');
+                video.src = data.url;
+                video.controls = true;
+                video.className = 'w-full h-full object-cover';
+                mediaPreview.appendChild(video);
+                addDownloadBtn('Download Video (MP4)', data.url);
+            } else if (data.status === 'redirect') {
+                mediaPreview.innerHTML = '<p class="text-gray-500 font-medium text-center">Video siap didownload.</p>';
+                addDownloadBtn('Download File', data.url);
+            } else if (data.status === 'picker') {
+                mediaPreview.innerHTML = '<p class="text-gray-500 font-medium text-center">Multi file terdeteksi. Pilih di bawah.</p>';
+                data.picker.forEach((item, idx) => {
+                    addDownloadBtn(`Unduh #${idx + 1} (${item.type})`, item.url);
+                });
+            }
+        }
+
+        function addDownloadBtn(text, url) {
+            const btn = document.createElement('a');
+            btn.href = url;
+            btn.target = '_blank';
+            btn.innerText = text;
+            btn.className = 'px-4 py-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-vw-accent text-sm font-bold text-center hover:bg-vw-accent hover:text-white transition-all';
+            downloadOptions.appendChild(btn);
+        }
+
+        downloadBtn.addEventListener('click', () => {
+            const url = input.value.trim();
+            if (url) fetchMedia(url);
+        });
+
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const url = input.value.trim();
+                if (url) fetchMedia(url);
+            }
+        });
     </script>
 </body>
 </html>
