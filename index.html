@@ -7,45 +7,151 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --vw-bg: #F8F9FA; --vw-surface: #FFFFFF; --vw-text: #1A1A2E; --vw-accent: #3B82F6; }
+        :root { --vw-bg: #F8F9FA; --vw-surface: #FFFFFF; --vw-text: #1A1A2E; --vw-accent: #3B82F6; --vw-accent-hover: #2563EB; --vw-border: rgba(0, 0, 0, 0.08); --vw-muted: #9CA3AF; }
+        @media (prefers-color-scheme: dark) { :root { --vw-bg: #0A0A0A; --vw-surface: #121212; --vw-text: #FAFAFA; --vw-muted: #9E9E9E; --vw-border: rgba(255, 255, 255, 0.08); } }
         body { font-family: 'Outfit', sans-serif; background-color: var(--vw-bg); color: var(--vw-text); }
-        .glass-card { background: var(--vw-surface); border: 1px solid rgba(0,0,0,0.08); border-radius: 1.5rem; }
+        .glass-card { background: var(--vw-surface); border: 1px solid var(--vw-border); border-radius: 1.5rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06); }
+        .btn-primary { background-color: var(--vw-accent); color: white; transition: all 0.2s; }
+        .btn-primary:hover { background-color: var(--vw-accent-hover); transform: translateY(-1px); }
+        .input-field { background: var(--vw-surface); border: 1px solid var(--vw-border); color: var(--vw-text); }
+        .input-field:focus { outline: none; border-color: var(--vw-accent); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .active-platform { border-color: var(--vw-accent) !important; background-color: rgba(59, 130, 246, 0.05) !important; }
     </style>
 </head>
-<body class="p-4 flex flex-col items-center justify-center min-h-screen">
-    <main class="w-full max-w-2xl">
+<body class="p-4 min-h-screen flex flex-col items-center justify-center">
+    <main class="w-full max-w-2xl my-8">
         <header class="text-center mb-8">
-            <h1 class="text-3xl font-extrabold mb-2">Vitalwounds <span class="text-vw-accent">Downloader</span></h1>
-            <p class="text-gray-500 font-medium">Backend Server: VPS Pro</p>
+            <h1 class="text-3xl font-extrabold tracking-tight mb-2">Vitalwounds <span class="text-vw-accent">Downloader</span></h1>
+            <p class="text-vw-muted font-medium">Download Video & Audio dengan server VPS Pro</p>
         </header>
 
-        <div class="glass-card p-6">
-            <input type="text" id="urlInput" placeholder="Tempel link video..." class="w-full p-4 rounded-xl border border-gray-200 mb-4 focus:ring-2 focus:ring-vw-accent outline-none">
-            <button id="downloadBtn" class="w-full py-4 bg-vw-accent text-white font-bold rounded-xl hover:bg-blue-600 transition">Download Sekarang</button>
-            <div id="status" class="mt-4 text-center text-sm font-bold text-gray-500"></div>
+        <section class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            <button onclick="selectPlatform(this, 'YouTube')" class="platform-btn p-4 rounded-2xl bg-white border border-vw-border hover:border-vw-accent flex flex-col items-center gap-2 transition dark:bg-zinc-900">
+                <img src="https://www.gstatic.com/youtube/img/branding/favicon/favicon_144x144.png" class="w-8 h-8 object-contain">
+                <span class="text-xs font-bold">YouTube</span>
+            </button>
+            <button onclick="selectPlatform(this, 'TikTok')" class="platform-btn p-4 rounded-2xl bg-white border border-vw-border hover:border-vw-accent flex flex-col items-center gap-2 transition dark:bg-zinc-900">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.83.99 1.99 1.7 3.27 2 .02 1.34.01 2.68.01 4.02-1.39-.08-2.73-.68-3.78-1.63-.44-.4-.8-.88-1.09-1.42-.03 2.76-.01 5.51-.02 8.27-.08 2.54-1.12 5.03-3.07 6.7-2.14 1.95-5.26 2.68-8.1 1.9-2.9-.74-5.32-3.13-5.99-6.08-.82-3.32.74-6.91 3.79-8.47 1.63-.87 3.53-1.13 5.35-.76v4.06c-1.17-.34-2.45-.11-3.41.62-.97.71-1.53 1.89-1.48 3.11.02 1.33.82 2.56 2.04 3.07 1.25.56 2.77.34 3.78-.54 1.05-.88 1.45-2.39 1.39-3.74.02-4.04.01-8.08.01-12.12z"/></svg>
+                <span class="text-xs font-bold">TikTok</span>
+            </button>
+            <button onclick="selectPlatform(this, 'Instagram')" class="platform-btn p-4 rounded-2xl bg-white border border-vw-border hover:border-vw-accent flex flex-col items-center gap-2 transition dark:bg-zinc-900">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" class="w-8 h-8">
+                <span class="text-xs font-bold">Instagram</span>
+            </button>
+            <button onclick="selectPlatform(this, 'Facebook')" class="platform-btn p-4 rounded-2xl bg-white border border-vw-border hover:border-vw-accent flex flex-col items-center gap-2 transition dark:bg-zinc-900">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="w-8 h-8">
+                <span class="text-xs font-bold">Facebook</span>
+            </button>
+        </section>
+
+        <div class="glass-card p-6 md:p-8">
+            <div class="flex flex-col gap-4">
+                <input type="text" id="urlInput" placeholder="Tempel link video di sini..." class="input-field w-full px-5 py-4 rounded-2xl text-lg font-medium outline-none">
+                <button id="downloadBtn" class="w-full py-4 rounded-2xl btn-primary font-bold text-sm">Download Sekarang</button>
+                
+                <div id="loading" class="hidden flex flex-col items-center py-10">
+                    <div class="w-10 h-10 border-4 border-vw-accent border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <p class="text-sm font-semibold text-vw-muted">Sedang mengambil data dari VPS...</p>
+                </div>
+
+                <div id="result" class="hidden mt-6 bg-vw-surface rounded-2xl border border-vw-border overflow-hidden p-4">
+                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                        <img id="thumb" class="w-full md:w-1/3 aspect-video object-cover rounded-xl shadow-sm" src="" alt="Thumbnail">
+                        <div class="flex-1 w-full">
+                            <h3 id="vidTitle" class="font-bold text-lg leading-tight mb-2 line-clamp-2"></h3>
+                            <p id="vidUploader" class="text-vw-muted text-sm font-medium mb-4"></p>
+                            
+                            <h4 class="text-xs font-bold text-vw-muted uppercase tracking-wider mb-2">Pilih Resolusi Video (MP4)</h4>
+                            <div id="videoFormats" class="grid grid-cols-2 gap-2 mb-4"></div>
+
+                            <h4 class="text-xs font-bold text-vw-muted uppercase tracking-wider mb-2">Pilih Audio (MP3/M4A)</h4>
+                            <div id="audioFormats" class="grid grid-cols-2 gap-2"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="error" class="hidden p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-semibold text-center"></div>
+            </div>
         </div>
     </main>
+
     <script>
-        document.getElementById('downloadBtn').addEventListener('click', async () => {
-            const url = document.getElementById('urlInput').value;
-            const status = document.getElementById('status');
-            status.innerText = "Memproses...";
-            
+        const input = document.getElementById('urlInput');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const loading = document.getElementById('loading');
+        const result = document.getElementById('result');
+        const error = document.getElementById('error');
+
+        function selectPlatform(btn, platform) {
+            document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active-platform'));
+            btn.classList.add('active-platform');
+            input.placeholder = `Tempel link ${platform} di sini...`;
+            input.focus();
+        }
+
+        downloadBtn.addEventListener('click', async () => {
+            const url = input.value.trim();
+            if (!url) return;
+
+            loading.classList.remove('hidden');
+            result.classList.add('hidden');
+            error.classList.add('hidden');
+
             try {
                 const response = await fetch('https://dl.vitalwounds.my.id/api/download', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ url })
                 });
+
                 const data = await response.json();
-                if(data.url) {
-                    window.open(data.url, '_blank');
-                    status.innerText = "Berhasil!";
-                } else {
-                    status.innerText = "Error: " + data.error;
+                
+                if (!response.ok || data.error) {
+                    throw new Error(data.error || 'Server Error');
                 }
-            } catch(e) {
-                status.innerText = "Error koneksi ke backend.";
+
+                document.getElementById('thumb').src = data.thumbnail || 'https://via.placeholder.com/640x360?text=No+Thumbnail';
+                document.getElementById('vidTitle').innerText = data.title || 'Video Tanpa Judul';
+                document.getElementById('vidUploader').innerText = data.uploader || 'Tidak diketahui';
+
+                const vContainer = document.getElementById('videoFormats');
+                const aContainer = document.getElementById('audioFormats');
+                vContainer.innerHTML = '';
+                aContainer.innerHTML = '';
+
+                if (data.videos && data.videos.length > 0) {
+                    data.videos.forEach(v => {
+                        const btn = document.createElement('a');
+                        btn.href = v.url;
+                        btn.target = '_blank';
+                        btn.className = 'px-3 py-2 text-xs font-bold text-center bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg border border-blue-100 transition-colors dark:bg-blue-900/20 dark:border-blue-900/30';
+                        btn.innerText = v.label;
+                        vContainer.appendChild(btn);
+                    });
+                } else {
+                    vContainer.innerHTML = '<span class="text-xs text-vw-muted">Tidak ada video tersedia</span>';
+                }
+
+                if (data.audios && data.audios.length > 0) {
+                    data.audios.slice(0, 4).forEach(a => {
+                        const btn = document.createElement('a');
+                        btn.href = a.url;
+                        btn.target = '_blank';
+                        btn.className = 'px-3 py-2 text-xs font-bold text-center bg-emerald-50 hover:bg-emerald-100 text-emerald-600 rounded-lg border border-emerald-100 transition-colors dark:bg-emerald-900/20 dark:border-emerald-900/30';
+                        btn.innerText = a.label;
+                        aContainer.appendChild(btn);
+                    });
+                } else {
+                    aContainer.innerHTML = '<span class="text-xs text-vw-muted">Tidak ada audio tersedia</span>';
+                }
+
+                result.classList.remove('hidden');
+            } catch (err) {
+                console.error(err);
+                error.innerText = 'Gagal: ' + err.message;
+                error.classList.remove('hidden');
+            } finally {
+                loading.classList.add('hidden');
             }
         });
     </script>
